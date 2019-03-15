@@ -1,0 +1,27 @@
+
+service: lambda-copypasta
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  environment:
+    DYNAMODB_TABLE: copy
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem 
+      Resource: "arn:aws:dynamodb:us-east-1:931168314570:table/copy"
+  versionFunctions: false
+  memoreSize: 128
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - http:
+          path: echo/hello/{id}
+          method: get
+          cors: true
+
+
+          
